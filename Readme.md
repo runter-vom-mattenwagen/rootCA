@@ -64,5 +64,5 @@
 - http://wiki.cacert.org/FAQ/subjectAltName
 - https://www.wikihow.com/Be-Your-Own-Certificate-Authority
 - https://www.digitalocean.com/community/tutorials/how-to-set-up-and-configure-a-certificate-authority-ca-on-ubuntu-20-04
-https://roll.urown.net/ca/ca_root_setup.html
-https://www.feistyduck.com/library/openssl-cookbook/online/
+- https://roll.urown.net/ca/ca_root_setup.html
+- https://www.feistyduck.com/library/openssl-cookbook/online/

@@ -50,13 +50,24 @@
 `-HTTP/-WWW emulates Webserver`
 `-http_server_binmode (with -WWW/-HTTP) serves binary files`
 
+## CA-Zertifikat in Clients bereitstellen
+
+**Ubuntu:**
+`cp cacert.pem /usr/local/share/ca-certificates/cacert.crt && update-ca-certificates`
+
+## SSL-Keys in Servern bereitstellen
+
+**Proxmox:**
+
+`cp server.crt /etc/pve/nodes/<nodename>/pve-ssl.pem`
+`cp server.key /etc/pve/nodes/<nodename>/pve-ssl.key`
+`sytemctl restart pveproxy`
+
 ## Zeug
 
 **Passphrase entfernen:**
 `openssl rsa -in server.key -out server.key.insecure`
 
-**in Ubuntu einfügen:**
-`cp cacert.pem /usr/local/share/ca-certificates/cacert.crt && update-ca-certificates`
 
 ## Links
 

@@ -2,6 +2,8 @@
 
 ## 1. Setup root CA
 
+**Prereqs:** Copy root-ca.conf and server.conf from this repo and amend both files to your needs.
+
 ### 1.1. Prepare directory:
 
     $ mkdir certs db private

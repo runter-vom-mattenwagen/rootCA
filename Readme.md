@@ -1,21 +1,21 @@
 # OpenSSL
 
-## Schnelles selfsigned Zertifikat
+## Fast selfsigned Certificate
 
 `openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 5 -nodes`
 
-## CA einrichten
+## Setup root CA
 
-**Verzeichnis vorbereiten:**
+## Prepare directory:
 
     $ mkdir certs db private
     $ openssl rand -hex 16 > db/serial
     $ touch db/index
 
-**Key und CSR erzeugen:** 
+## Create key and CSR
 `openssl req -new -out root-ca.csr -keyout private/root-ca.key -config root-ca.conf`
 
-**Zertifikate erzeugen:**
+## Create Certificate
 `openssl ca -selfsign -in root-ca.csr -out root-ca.crt -extensions ca_ext -config root-ca.conf`
 
 ## Serverzertifikat Webserver erzeugen
@@ -29,51 +29,28 @@
 **Zert:**
 `openssl x509 -req -days 3650 -in server.csr -CA root-ca.crt -CAkey private/root-ca.key -CAcreateserial -out server.crt -extfile server.conf -extensions req_v3ext`
 
-## Checks
+## Debugging
 
-**Key verifizieren:**
+**Verify Key:**
 `openssl rsa -noout -text -in server.key`
 
-**Cert verifizieren:**
+**Verify Cert:**
 `openssl x509 -noout -text -in cert.pem`
 
-**CSR verifizieren:**
+**verify CSR:**
 `openssl req -noout -text -in server.csr`
 
-**Ziel verifizieren:**
+**Verify Target:**
 `openssl s_client -connect pve.fritz.box:443 -verify 3`
 
-## Webserver mit openssl
+## Webserver with openssl
 
 `openssl s_server -key key.pem -cert cert.pem -accept 10443 -www`
 
 `-HTTP/-WWW emulates Webserver`
 `-http_server_binmode (with -WWW/-HTTP) serves binary files`
 
-## CA-Zertifikat in Clients bereitstellen
+## Stuff
 
-**Ubuntu:**
-`cp cacert.pem /usr/local/share/ca-certificates/cacert.crt && update-ca-certificates`
-
-## SSL-Keys in Servern bereitstellen
-
-**Proxmox:**
-
-`cp server.crt /etc/pve/nodes/<nodename>/pve-ssl.pem`
-`cp server.key /etc/pve/nodes/<nodename>/pve-ssl.key`
-`sytemctl restart pveproxy`
-
-## Zeug
-
-**Passphrase entfernen:**
+**Remove Passphrase:**
 `openssl rsa -in server.key -out server.key.insecure`
-
-
-## Links
-
-- https://www.golinuxcloud.com/create-certificate-authority-root-ca-linux/
-- http://wiki.cacert.org/FAQ/subjectAltName
-- https://www.wikihow.com/Be-Your-Own-Certificate-Authority
-- https://www.digitalocean.com/community/tutorials/how-to-set-up-and-configure-a-certificate-authority-ca-on-ubuntu-20-04
-- https://roll.urown.net/ca/ca_root_setup.html
-- https://www.feistyduck.com/library/openssl-cookbook/online/

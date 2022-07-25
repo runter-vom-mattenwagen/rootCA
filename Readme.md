@@ -43,14 +43,14 @@
 **Verify Target:**
 `openssl s_client -connect pve.fritz.box:443 -verify 3`
 
-## Webserver with openssl
+### Webserver with openssl
 
 `openssl s_server -key key.pem -cert cert.pem -accept 10443 -www`
 
 `-HTTP/-WWW emulates Webserver`
 `-http_server_binmode (with -WWW/-HTTP) serves binary files`
 
-## Stuff
+## AOB
 
 **Remove Passphrase:**
 `openssl rsa -in server.key -out server.key.insecure`
